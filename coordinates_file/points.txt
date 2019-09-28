@@ -1,0 +1,6 @@
+point1 -> longitude: -15.97, latitude: 5.02
+point2 -> longitude: -29.39, latitude: -12.81
+point3 -> longitude: -0.92, latitude: -19.91
+point4 -> longitude: 3.64, latitude: 14.47
+point5 -> longitude: 23.54, latitude: 19.58
+point6 -> longitude: -16.45, latitude: 20.89
