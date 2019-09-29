@@ -38,17 +38,17 @@ public class PlotPointsAndPolygon extends Panel {
 		K = polygon.size() - 1;
 		
 	    // Create data table
-	    DataTable quadrangleData = new DataTable(Double.class, Double.class);
-	    quadrangleData.setName("Quadrangle");
+	    DataTable polygonData = new DataTable(Double.class, Double.class);
+	    polygonData.setName("Polygon");
 
 	    DataTable pointData = new DataTable(Double.class, Double.class);
 	    pointData.setName("Points");
 	    
 	    // Create new XY Plots
-	    XYPlot xyPlot = new XYPlot(quadrangleData, pointData);
+	    XYPlot xyPlot = new XYPlot(polygonData, pointData);
 
-	    for (LatLong angle: polygon) {
-	    	quadrangleData.add(angle.getLongitude(), angle.getLatitude());
+	    for (LatLong border: polygon) {
+	    	polygonData.add(border.getLongitude(), border.getLatitude());
 	    }
 	    
 	    for (LatLong point: points) {
@@ -59,15 +59,15 @@ public class PlotPointsAndPolygon extends Panel {
 	    
 	    // Create different data series for each point.
 	    // This is useful for the legend and for assigning different colors.
-	    List<DataSeries> ds_quadrangle = new ArrayList<DataSeries>();
+	    List<DataSeries> ds_polygon = new ArrayList<DataSeries>();
 	    int iterations = 0;
 	    for (int k=0; k<K; k++) {
 	    	DataTable tempData = new DataTable(Double.class, Double.class);
 	    	tempData.add(polygon.get(k).getLongitude(), polygon.get(k).getLatitude());
 	     	if (iterations < points.size()-1) {
-	 		    DataSeries ds = new DataSeries("Angle " + (k+1), tempData);
+	 		    DataSeries ds = new DataSeries("Border " + (k+1), tempData);
 //	 		    plot.add(ds);
-	 		    ds_quadrangle.add(ds);
+	 		    ds_polygon.add(ds);
 	     	}
 		    iterations++;
 	    }
@@ -86,8 +86,8 @@ public class PlotPointsAndPolygon extends Panel {
 	    }
  		
 	    // Sort point data series by name.
-	    ds_quadrangle.sort(new DataSeriesComparator());
- 		for (DataSeries ds: ds_quadrangle) {
+	    ds_polygon.sort(new DataSeriesComparator());
+ 		for (DataSeries ds: ds_polygon) {
  			xyPlot.add(ds);
  		}
 	    
@@ -149,7 +149,7 @@ public class PlotPointsAndPolygon extends Panel {
  		lineRenderer.setStroke(new BasicStroke(
  				3.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND,
  				10.0f, new float[] {3f, 6f}, 0.0f));
-		xyPlot.setLineRenderers(quadrangleData, lineRenderer);
+		xyPlot.setLineRenderers(polygonData, lineRenderer);
 
  		// Custom gaps for points
  		lineRenderer.setGap(2.0);
@@ -157,7 +157,7 @@ public class PlotPointsAndPolygon extends Panel {
  		
  		// Format rendering of data points.
  		// This batch of code changes the color of the points randomly.
- 		for (DataSeries ds: ds_quadrangle) {
+ 		for (DataSeries ds: ds_polygon) {
  	 		PointRenderer defaultPointRenderer = new DefaultPointRenderer2D();
  	 		
  	 		// Java 'Color' class takes 3 floats, from 0 to 1.
@@ -202,12 +202,12 @@ public class PlotPointsAndPolygon extends Panel {
 	
  	@Override
  	public String getTitle() {
- 		return "Enclosing Quadrangle Plot";
+ 		return "Bounding Box Plot";
  	}
 
  	@Override
  	public String getDescription() {
- 		return "Enclosing Quadrangle Plot";
+ 		return "Bounding Box Plot";
  	}
 
 }

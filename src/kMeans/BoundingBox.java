@@ -8,7 +8,7 @@ import plot.LatLong;
 import plot.PlotPointsAndPolygon;
 
 
-public class EnclosingParallelogram {
+public class BoundingBox {
    
     static LatLong topLeft;
     static LatLong topRight;
@@ -47,15 +47,15 @@ public class EnclosingParallelogram {
 		latLongs = fm.getLatLongs();
 		*/
                
-        EnclosingParallelogram es = new EnclosingParallelogram();
-        List<LatLong> quadrangle = es.getEnclosingParallelogram(latLongs);
+        BoundingBox es = new BoundingBox();
+        List<LatLong> quadrangle = es.getBoundingBox(latLongs);
        
         PlotPointsAndPolygon myplot = new PlotPointsAndPolygon(latLongs, quadrangle);
         myplot.showInFrame();
        
     }
  
-    private List<LatLong> getEnclosingParallelogram(List<LatLong> latLongs) {
+    private List<LatLong> getBoundingBox(List<LatLong> latLongs) {
        
         double maxLongitude = -90;
         double minLongitude = 90;
@@ -72,16 +72,48 @@ public class EnclosingParallelogram {
             if (minLatitude > latLong.getLatitude())
                 minLatitude = latLong.getLatitude();
         }
- 
-        topLeft = new LatLong(minLongitude, maxLatitude, 1);
-        topRight = new LatLong(maxLongitude, maxLatitude, 2);
-        bottomLeft = new LatLong(minLongitude, minLatitude, 3);
-        bottomRight = new LatLong(maxLongitude, minLatitude, 4);
+        
+        // Calculate the variance and standard deviation of each coordinate
+        // (longitude and laltitude).
+        int N = latLongs.size();
+        double sum1 = 0;
+        double mean_longitude = 0; 
+        double sum2 = 0;
+        double mean_latitude = 0;
+        for (LatLong latLong: latLongs) {
+        	sum1 += latLong.getLongitude();
+        	sum2 += latLong.getLatitude();
+        }
+        mean_longitude = sum1 / N;
+        mean_latitude = sum2 / N;
+        System.out.println("mean longitude: " + mean_longitude);
+        System.out.println("mean latitude: " + mean_latitude);
+        
+        sum1 = 0;
+        sum2 = 0;
+        
+        double var_longitude = 0;
+        double var_latitude = 0;
+        for (LatLong latLong: latLongs) {
+        	sum1 += Math.pow((latLong.getLongitude() - mean_longitude), 2);
+        	sum2 += Math.pow((latLong.getLatitude() - mean_latitude), 2);
+        }
+        var_longitude = sum1 / N;
+        var_latitude = sum2 / N;
+        double std_longitude = Math.sqrt(var_longitude);
+        double std_latitude = Math.sqrt(var_latitude);
+        System.out.println("std longitude: " + std_longitude);
+        System.out.println("std latitude: " + std_latitude);
+        
+        topLeft = new LatLong(minLongitude - std_longitude / 3, maxLatitude + std_latitude / 3, 1);
+        topRight = new LatLong(maxLongitude + std_longitude / 3, maxLatitude + std_latitude / 3, 2);
+        bottomLeft = new LatLong(minLongitude - std_longitude / 3, minLatitude - std_latitude / 3, 3);
+        bottomRight = new LatLong(maxLongitude + std_longitude / 3, minLatitude - std_latitude / 3, 4);
        
-        List<LatLong> parallelogram = Arrays.asList(topLeft, topRight, bottomRight,
+        List<LatLong> box = Arrays.asList(topLeft, topRight, bottomRight,
                     bottomLeft, topLeft);
        
-        return parallelogram;
+        return box;
     }
    
 }
