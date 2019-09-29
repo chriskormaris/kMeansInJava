@@ -133,28 +133,12 @@ public class KMeans {
 			}
 			
 			// Calculate the cost function J.
-	        double sum1 = 0;
+	        double sum = 0;
 			for (int n=0; n<N; n++) {
-				LatLong latLong = latLongs.get(n);
-                double[] xn = new double[2];
-                xn[0] = latLong.getLongitude();
-                xn[1] = latLong.getLatitude();
-                
-	            double sum2 = 0;
-				for (int k=0; k<K; k++) {
-					double[] Mk = new double[D];
-					Mk[0] = means[k].getLongitude();
-					Mk[1] = means[k].getLatitude();
-	                
-					double[] temp = new double[2];
-					temp[0] = xn[0] - Mk[0];
-					temp[1] = xn[1] - Mk[1];
-					
-	            	sum2 = sum2 + dataClusters[n] * Math.pow(Utilities.euclideanNorm(temp), 2);
-				}
-	            sum1 = sum1 + sum2;
+				double minDistance = minDistances[n]; 
+				sum += minDistance;
 			}
-	        double J = sum1;
+	        double J = sum;
 	        
 	        // print the value of objective function (!!YOU NEED TO COMPUTE THE COST FUNCTION J!!!)
 	        System.out.printf("Iteration %4d  Cost function %11.6f\n", it, J); 
