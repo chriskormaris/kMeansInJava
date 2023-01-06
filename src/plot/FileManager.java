@@ -16,46 +16,46 @@ import java.util.List;
 
 
 public class FileManager {
-	
+
 	private List<LatLong> latLongs;
-	
+
 	public void parseFile(String inputFile) {
-	
+
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(inputFile));
 			latLongs = new ArrayList<>();
 			String line;
 			int id = 1;
 			while ((line = br.readLine()) != null) {
-			
+
 				if (line.startsWith("point")) {
 					double longitude = Double.parseDouble(line.split("->")[1].split(",")[0].replace("longitude:", "").trim());
 					double latitude = Double.parseDouble(line.split("->")[1].split(",")[1].replace("latitude:", "").trim());
 					LatLong latlong = new LatLong(longitude, latitude, id);
-					
+
 					// check if latlong is unique
 					if (!latLongs.contains(latlong)) {
 						latLongs.add(latlong);
 					} else {
 						System.err.println("A city with the same latitude and longitude already exists!\n");
 					}
-					
+
 				}
-			
+
 				id++;
 			}
-			
+
 			br.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	
+
 	}
-	
+
 	public void recreateFile(String filename) {
-	    try {
+		try {
 			if (Files.exists(Paths.get(filename), LinkOption.NOFOLLOW_LINKS)) {
 				Files.delete(Paths.get(filename));
 			}
@@ -66,19 +66,19 @@ public class FileManager {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void writeLineToFile(String outputFile, String line) {
-		
+
 		try {
-		    Files.write(Paths.get(outputFile), (line + "\n").getBytes(), StandardOpenOption.APPEND);
+			Files.write(Paths.get(outputFile), (line + "\n").getBytes(), StandardOpenOption.APPEND);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	public List<LatLong> getLatLongs() {
 		return latLongs;
 	}
-	
+
 }

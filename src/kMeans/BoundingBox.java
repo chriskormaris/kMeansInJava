@@ -1,24 +1,24 @@
 package kMeans;
- 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import plot.LatLong;
 import plot.PlotPointsAndPolygon;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 
 public class BoundingBox {
-   
-    static LatLong topLeft;
-    static LatLong topRight;
-    static LatLong bottomLeft;
-    static LatLong bottomRight;
-   
-    public static void main(String[] args) {
-        List<LatLong> latLongs = new ArrayList<>();
- 
-        /* FIXED POINT COORDINATES */
+
+	static LatLong topLeft;
+	static LatLong topRight;
+	static LatLong bottomLeft;
+	static LatLong bottomRight;
+
+	public static void main(String[] args) {
+		List<LatLong> latLongs = new ArrayList<>();
+
+		/* FIXED POINT COORDINATES */
         /*
         LatLong latLong1 = new LatLong(23, 37, 1);
         LatLong latLong2 = new LatLong(24, 37, 2);  // false positive
@@ -31,47 +31,47 @@ public class BoundingBox {
 //      latLongs.addAll(Arrays.asList(latLong1, latLong2, latLong3, latLong4));
         latLongs.addAll(Arrays.asList(latLong1, latLong2, latLong3, latLong4, latLong5, latLong6, latLong7));
         */
-       
-        /* RANDOM COORDINATES */
-        int num_lat_longs = 100;
-        for (int i=0; i<num_lat_longs; i++) {
-            LatLong latLong = new LatLong().getRandomLatLong(25, 22, 39, 36);
-            // System.out.println(latLong);
-            latLongs.add(latLong);
-        }
-       
-        /* READ FROM FILE COORDINATES */
+
+		/* RANDOM COORDINATES */
+		int num_lat_longs = 100;
+		for (int i = 0; i < num_lat_longs; i++) {
+			LatLong latLong = new LatLong().getRandomLatLong(25, 22, 39, 36);
+			// System.out.println(latLong);
+			latLongs.add(latLong);
+		}
+
+		/* READ FROM FILE COORDINATES */
         /*
 		FileManager fm = new FileManager();
 		fm.parseFile("coordinates_file/points.txt");
 		latLongs = fm.getLatLongs();
 		*/
-               
-        BoundingBox es = new BoundingBox();
-        List<LatLong> boundingBox = es.getBoundingBox(latLongs);
-       
-        PlotPointsAndPolygon myplot = new PlotPointsAndPolygon(latLongs, boundingBox);
-        myplot.showInFrame();
-       
-    }
- 
-    private List<LatLong> getBoundingBox(List<LatLong> latLongs) {
-       
-        double maxLongitude = -180;
-        double minLongitude = 180;
-        double maxLatitude = -90;
-        double minLatitude = 90;
-       
-        for (LatLong latLong: latLongs) {
-            if (maxLongitude < latLong.getLongitude())
-                maxLongitude = latLong.getLongitude();
-            if (minLongitude > latLong.getLongitude())
-                minLongitude = latLong.getLongitude();
-            if (maxLatitude < latLong.getLatitude())
-                maxLatitude = latLong.getLatitude();
-            if (minLatitude > latLong.getLatitude())
-                minLatitude = latLong.getLatitude();
-        }
+
+		BoundingBox es = new BoundingBox();
+		List<LatLong> boundingBox = es.getBoundingBox(latLongs);
+
+		PlotPointsAndPolygon myplot = new PlotPointsAndPolygon(latLongs, boundingBox);
+		myplot.showInFrame();
+
+	}
+
+	private List<LatLong> getBoundingBox(List<LatLong> latLongs) {
+
+		double maxLongitude = -180;
+		double minLongitude = 180;
+		double maxLatitude = -90;
+		double minLatitude = 90;
+
+		for (LatLong latLong : latLongs) {
+			if (maxLongitude < latLong.getLongitude())
+				maxLongitude = latLong.getLongitude();
+			if (minLongitude > latLong.getLongitude())
+				minLongitude = latLong.getLongitude();
+			if (maxLatitude < latLong.getLatitude())
+				maxLatitude = latLong.getLatitude();
+			if (minLatitude > latLong.getLatitude())
+				minLatitude = latLong.getLatitude();
+		}
         
         /*
         // Calculate the variance and standard deviation of each coordinate
@@ -111,16 +111,16 @@ public class BoundingBox {
         bottomLeft = new LatLong(minLongitude - std_longitude / 3, minLatitude - std_latitude / 3, 3);
         bottomRight = new LatLong(maxLongitude + std_longitude / 3, minLatitude - std_latitude / 3, 4);
        	*/
-        
-        topLeft = new LatLong(minLongitude, maxLatitude, 1);
-        topRight = new LatLong(maxLongitude, maxLatitude, 2);
-        bottomLeft = new LatLong(minLongitude, minLatitude, 3);
-        bottomRight = new LatLong(maxLongitude, minLatitude, 4);
-       	
-        List<LatLong> box = Arrays.asList(topLeft, topRight, bottomRight,
-                    bottomLeft, topLeft);
-       
-        return box;
-    }
-   
+
+		topLeft = new LatLong(minLongitude, maxLatitude, 1);
+		topRight = new LatLong(maxLongitude, maxLatitude, 2);
+		bottomLeft = new LatLong(minLongitude, minLatitude, 3);
+		bottomRight = new LatLong(maxLongitude, minLatitude, 4);
+
+		List<LatLong> box = Arrays.asList(topLeft, topRight, bottomRight,
+				bottomLeft, topLeft);
+
+		return box;
+	}
+
 }
