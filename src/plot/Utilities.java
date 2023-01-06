@@ -38,7 +38,7 @@ public class Utilities {
         	topRight = maxLatPoint;
         }
         
-        List<LatLong> topLeftAndTopRight = new ArrayList<LatLong>();
+        List<LatLong> topLeftAndTopRight = new ArrayList<>();
         topLeftAndTopRight.addAll(Arrays.asList(topLeft, topRight));
         // System.out.println("topLeft: " + bottomLeft);
         // System.out.println("topRight: " + bottomRight);
@@ -79,7 +79,7 @@ public class Utilities {
         	bottomRight = minLatPoint;
         }
         
-        List<LatLong> bottomLeftBottomRight = new ArrayList<LatLong>();
+        List<LatLong> bottomLeftBottomRight = new ArrayList<>();
         bottomLeftBottomRight.addAll(Arrays.asList(bottomLeft, bottomRight));
         // System.out.println("topLeft: " + bottomLeft);
         // System.out.println("topRight: " + bottomRight);

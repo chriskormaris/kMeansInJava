@@ -16,9 +16,9 @@ public class BoundingBox {
     static LatLong bottomRight;
    
     public static void main(String[] args) {
-        List<LatLong> latLongs = new ArrayList<LatLong>();
+        List<LatLong> latLongs = new ArrayList<>();
  
-        /*** FIXED POINT COORDINATES ***/
+        /* FIXED POINT COORDINATES */
         /*
         LatLong latLong1 = new LatLong(23, 37, 1);
         LatLong latLong2 = new LatLong(24, 37, 2);  // false positive
@@ -32,7 +32,7 @@ public class BoundingBox {
         latLongs.addAll(Arrays.asList(latLong1, latLong2, latLong3, latLong4, latLong5, latLong6, latLong7));
         */
        
-        /*** RANDOM COORDINATES ***/
+        /* RANDOM COORDINATES */
         int num_lat_longs = 100;
         for (int i=0; i<num_lat_longs; i++) {
             LatLong latLong = new LatLong().getRandomLatLong(25, 22, 39, 36);
@@ -40,7 +40,7 @@ public class BoundingBox {
             latLongs.add(latLong);
         }
        
-        /*** READ FROM FILE COORDINATES ***/
+        /* READ FROM FILE COORDINATES */
         /*
 		FileManager fm = new FileManager();
 		fm.parseFile("coordinates_file/points.txt");

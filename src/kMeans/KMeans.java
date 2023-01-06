@@ -10,9 +10,7 @@ import plot.PlotClusters;
 import plot.Utilities;
 
 public class KMeans {
-	
-	Random r;
-	
+
 	private LatLong[] means;
 	private int[] dataClusters;
 
@@ -65,10 +63,11 @@ public class KMeans {
 		System.out.println("Minit: ");
 		for (int k=0; k<K; k++) {
 			for (int d=0; d<2; d++) {
-				if (d == 0)
+				if (d == 0) {
 					System.out.print(means[k].getLongitude() + " ");
-				else if (d == 1)
+				} else if (d == 1) {
 					System.out.print(means[k].getLatitude() + " ");
+				}
 			}
 			System.out.println();
 		}
@@ -156,8 +155,8 @@ public class KMeans {
 	}
 
 	public static void main(String[] args) {	
-		/*** READ FROM FILE COORDINATES ***/
-		List<LatLong> latLongs = new ArrayList<LatLong>();
+		/* READ FROM FILE COORDINATES */
+		List<LatLong> latLongs = new ArrayList<>();
 		int num_lat_longs = 100;
 		for (int i=0; i<num_lat_longs; i++) {
 			LatLong latLong = new LatLong().getRandomLatLong(25, 22, 39, 36);
@@ -165,7 +164,7 @@ public class KMeans {
 			latLongs.add(latLong);
 		}
 		
-		/*** READ FROM FILE COORDINATES ***/
+		/* READ FROM FILE COORDINATES */
 		/*
 		FileManager fm = new FileManager();
 		fm.parseFile("coordinates_file/points.txt");
@@ -182,10 +181,11 @@ public class KMeans {
 		System.out.println("M: ");
 		for (int k=0; k<K; k++) {
 			for (int d=0; d<2; d++) {
-				if (d == 0)
+				if (d == 0) {
 					System.out.print(km.getMeans()[k].getLongitude() + " ");
-				else if (d == 1)
+				} else if (d == 1) {
 					System.out.print(km.getMeans()[k].getLatitude() + " ");
+				}
 			}
 			System.out.println();
 		}

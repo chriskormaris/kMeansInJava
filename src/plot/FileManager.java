@@ -23,7 +23,7 @@ public class FileManager {
 	
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(inputFile));
-			latLongs = new ArrayList<LatLong>();
+			latLongs = new ArrayList<>();
 			String line;
 			int id = 1;
 			while ((line = br.readLine()) != null) {
